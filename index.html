@@ -7,34 +7,19 @@
   <title>Redirecionando...</title>
   <style>
     body {
-      background-color: #000000; /* Fundo preto */
+      background-color: #FFFFFF;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .loading-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    h1 {
-      font-size: 18px;
-      color: #FFFFFF; /* Texto branco */
-      margin-bottom: 20px;
     }
     .loading {
       animation: rotate 1s linear infinite;
-      border: 5px solid #4F4F4F; /* Cinza escuro */
-      border-top: 5px solid #00FF00; /* Parte superior em verde */
+      border: 5px solid #F3F3F3;
+      border-top: 5px solid #3498DB;
       border-radius: 50%;
       height: 50px;
       width: 50px;
+      margin: 20px auto;
     }
     @keyframes rotate {
       0% {
@@ -44,47 +29,36 @@
         transform: rotate(360deg);
       }
     }
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 24px;
+    }
   </style>
   <script>
-    // Função para fazer a requisição ao webhook do n8n
-    async function obterNumeros() {
-      try {
-        console.log('Iniciando requisição ao webhook...');
-        const response = await fetch('https://ren8n.digitalren.uk/webhook/presselfinal', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        console.log('Resposta recebida do webhook:', response);
-        if (!response.ok) {
-          throw new Error('Erro na requisição ao webhook');
-        }
-        const data = await response.json();
-        console.log('Dados recebidos do webhook:', data);
-        return data.numbers;
-      } catch (error) {
-        console.error('Erro ao obter os números do webhook:', error);
-        throw error;
-      }
-    }
-
     // Função para redirecionar para um grupo de WhatsApp aleatório
-    async function redirecionar() {
-      try {
-        const numeros = await obterNumeros();
-        const numeroAleatorio = numeros[Math.floor(Math.random() * numeros.length)];
-        const url = `https://api.whatsapp.com/send?phone=${numeroAleatorio}&text=Oii,%20quero%20ver%20seus%20conteudos!`;
-        console.log('Redirecionando para:', url);
-        window.location.href = url;
-      } catch (error) {
-        console.error('Erro ao obter os números ou redirecionar:', error);
-        // URL de fallback em caso de erro
-        window.location.href = 'https://api.whatsapp.com/send?phone=5521984262391&text=Oi,%20tudo%20bem%20gata%20?';
-      }
+    function redirecionar() {
+      var grupos = [
+	    'https://wa.me/5521987167222?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 2
+        'https://wa.me/5521987167553?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 2
+        'https://wa.me/5521987167739?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 3
+        'https://wa.me/5521987167659?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 4
+		'https://wa.me/5521987167262?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 5
+        'https://wa.me/5521987167593?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 6
+        'https://wa.me/5521987167159?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 7
+        'https://wa.me/5521987167494?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 8
+        'https://wa.me/5521987167097?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 9
+        'https://wa.me/5521987167374?text=Oi%2C%20quero%20ver%20seus%20conteudos', // Grupo 10
+        'https://wa.me/5521987167329?text=Oi%2C%20quero%20ver%20seus%20conteudos' // Grupo 11
+      ];
+      var grupoAleatorio = grupos[Math.floor(Math.random() * grupos.length)];
+      window.location.href = grupoAleatorio;
     }
-
-   </script>
+    // Função para enviar o evento de PageView para o Facebook
+    function enviarPixel() {
+      fbq('track', 'PageView');
+    }
+  </script>
   <!-- Pixel do Facebook -->
   <script>
     !function(f,b,e,v,n,t,s)
@@ -95,15 +69,12 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'SEUPIXEL');
-    fbq('track', 'Pageview');
+    fbq('init', '700504495535468');
+    fbq('track', 'PageView');
   </script>
-
 </head>
-<body onload="redirecionar(); enviarPixel();">
-  <div class="loading-container">
-    <h1>Aguarde um momento por favor...</h1>
-    <div class="loading"></div>
-  </div>
+<body onload="setTimeout(redirecionar, 5000); enviarPixel();">
+  <div class="loading"></div>
+  <h1>Aguarde alguns segundos, vou liberar o que prometi para você...</h1>
 </body>
 </html>
